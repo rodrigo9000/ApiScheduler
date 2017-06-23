@@ -1,8 +1,13 @@
 from tkinter import *
 from tkinter import ttk
 
+import urllib.request
+import urllib.parse
+import base64
+
 class Feedback:
     def __init__(self, master):
+
         self.frame_header = ttk.Frame(master)
         self.frame_header.pack()
 
@@ -30,14 +35,35 @@ class Feedback:
         # Creates the Check icon when the test button is pushed
         self.checkicon = ttk.Label(self.frame_header)
         self.checkicon.pack(side=RIGHT)
-        check = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\greencheck.gif').subsample(10, 10)
+        greencheck = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\greencheck.gif').subsample(10, 10)
+        redcheck = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\redcheck.gif').subsample(10, 10)
 
         def test(self):
-            self.checkicon.config(image=check)
+            url = 'https://s001793.mobicontrolcloud.com/mobicontrol/api/token'
+
+            encoded = base64.b64encode(b'154a4c63dcd1431cb91d36667fe38efc:Z4MINpFgRu9vq51VSxCoDRgxY7xxjUtv')
+
+            values = {'grant_type': 'password',
+                      'username': 'rodrigo2',
+                      'password': '1'}
+
+            data = urllib.parse.urlencode(values)
+            data = data.encode('ascii')
+            req = urllib.request.Request(url, data)
+            req.add_header('Authorization', ('Basic ' + encoded.decode('utf-8')))
+            req.add_header('content-type', 'application/x-www-form-urlencoded')
+
+            response = urllib.request.urlopen(req)
+
+            if (response.code == 200):
+                self.checkicon.config(image=greencheck)
+            else:
+                self.checkicon.config(image=redcheck)
 
 def main():
     # Tk constructor method
     root = Tk()
+    root.geometry('1024x350+500+300')
     feedback = Feedback(root)
     root.mainloop()
 
