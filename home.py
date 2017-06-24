@@ -15,7 +15,7 @@ class Feedback:
         self.entry_username = ttk.Entry(self.frame_header, width = 28)
         self.entry_username.insert(0, 'Username')   #Insert the string 'Username' into the Entry field
 
-        self.entry_password = ttk.Entry(self.frame_header, width=28)
+        self.entry_password = ttk.Entry(self.frame_header, width=28, show = '*')
         self.entry_password.insert(0, 'Password')
 
         self.entry_clientid = ttk.Entry(self.frame_header, width=28)
@@ -41,11 +41,13 @@ class Feedback:
         def test(self):
             url = 'https://s001793.mobicontrolcloud.com/mobicontrol/api/token'
 
-            encoded = base64.b64encode(b'154a4c63dcd1431cb91d36667fe38efc:Z4MINpFgRu9vq51VSxCoDRgxY7xxjUtv')
+            token = (self.entry_clientid.get()).strip(' ') + ":" + (self.entry_clientsecret.get()).strip(' ')
+            token = token.encode('utf-8')
+            encoded = base64.b64encode(token)
 
             values = {'grant_type': 'password',
-                      'username': 'rodrigo2',
-                      'password': '1'}
+                      'username': (self.entry_username.get()).strip(' '),
+                      'password': (self.entry_password.get()).strip(' ')}
 
             data = urllib.parse.urlencode(values)
             data = data.encode('ascii')
@@ -53,12 +55,13 @@ class Feedback:
             req.add_header('Authorization', ('Basic ' + encoded.decode('utf-8')))
             req.add_header('content-type', 'application/x-www-form-urlencoded')
 
-            response = urllib.request.urlopen(req)
-
-            if (response.code == 200):
+            try:
+                response = urllib.request.urlopen(req)
                 self.checkicon.config(image=greencheck)
-            else:
+            except urllib.error.HTTPError as e:
+                print(e.code)
                 self.checkicon.config(image=redcheck)
+
 
 def main():
     # Tk constructor method
