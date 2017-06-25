@@ -32,16 +32,22 @@ class Feedback:
         # Creates the Button 'Test'
         testButton = ttk.Button(self.frame_header, text='Test', command=lambda: test(self)).pack(side=LEFT, padx=5, pady=5)
 
-        # Creates the Check icon when the test button is pushed
-        self.checkicon = ttk.Label(self.frame_header)
-        self.checkicon.pack(side=RIGHT)
+        # Creates the image icons to be shown when Test button is pressed
+        self.lightgrey = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\lightgrey.gif').subsample(10, 10) # Image icon to be used as place holder
         greencheck = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\greencheck.gif').subsample(10, 10)
         redcheck = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\redcheck.gif').subsample(10, 10)
+
+        # Creates a Label to host green/check images as well as the initial place holder img
+        self.checkicon = ttk.Label(self.frame_header)
+        self.checkicon.config(image = self.lightgrey)
+        self.checkicon.pack(side=RIGHT)
+
 
         def test(self):
             url = 'https://s001793.mobicontrolcloud.com/mobicontrol/api/token'
 
-            token = (self.entry_clientid.get()).strip(' ') + ":" + (self.entry_clientsecret.get()).strip(' ')
+            token = (self.entry_clientid.get()).strip(' ').strip('\n') + ":" + (self.entry_clientsecret.get()).strip(' ').strip('\n')
+            print(token)
             token = token.encode('utf-8')
             encoded = base64.b64encode(token)
 
@@ -66,7 +72,7 @@ class Feedback:
 def main():
     # Tk constructor method
     root = Tk()
-    root.geometry('1024x350+500+300')
+    # root.geometry('1024x350+500+300')
     feedback = Feedback(root)
     root.mainloop()
 
