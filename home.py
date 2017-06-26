@@ -29,8 +29,19 @@ class Feedback:
         self.entry_clientid.pack(side=LEFT, padx=5, pady=5)
         self.entry_clientsecret.pack(side=LEFT, padx=5, pady=5)
 
+        # Creates second frame to place URL field
+        self.frame_header2 = ttk.Frame(master)
+        self.frame_header2.pack(side=LEFT)
+
+        # URL Entry field is created a placed inside the second frame - just bellow name field
+        self.entry_url = ttk.Entry(self.frame_header2, width=66)
+        self.entry_url.insert(0, 'https://s001793.mobicontrolcloud.com/mobicontrol')
+        self.entry_url.pack(side=LEFT, padx=5, pady=5)
+
         # Creates the Button 'Test'
         testButton = ttk.Button(self.frame_header, text='Test', command=lambda: test(self)).pack(side=LEFT, padx=5, pady=5)
+
+
 
         # Creates the image icons to be shown when Test button is pressed
         self.lightgrey = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\lightgrey.gif').subsample(10, 10) # Image icon to be used as place holder
@@ -44,11 +55,13 @@ class Feedback:
 
 
         def test(self):
-            url = 'https://s001793.mobicontrolcloud.com/mobicontrol/api/token'
-
+            # get the url and add the path at the end of the string to get the token
+            url = (self.entry_url.get()).strip('\/') + '/api/token' #'https://s001793.mobicontrolcloud.com/mobicontrol/api/token'
+            print(url)
+            # generates the token following the format (ClientId:ClientSecret)
             token = (self.entry_clientid.get()).strip(' ').strip('\n') + ":" + (self.entry_clientsecret.get()).strip(' ').strip('\n')
-            print(token)
-            token = token.encode('utf-8')
+
+            token = token.encode('utf-8') # turn the str into binary
             encoded = base64.b64encode(token)
 
             values = {'grant_type': 'password',
