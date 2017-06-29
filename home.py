@@ -4,6 +4,7 @@ from tkinter import ttk
 import urllib.request
 import urllib.parse
 import base64
+from tkinter.ttk import Panedwindow, Notebook
 
 class Feedback:
     def __init__(self, master):
@@ -33,16 +34,35 @@ class Feedback:
         testButton = ttk.Button(self.frame_header, text='Test', command=lambda: test(self)).pack(side=LEFT, padx=5, pady=5)
 
         # Creates the image icons to be shown when Test button is pressed
-        self.lightgrey = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\lightgrey.gif').subsample(10, 10) # Image icon to be used as place holder
-        greencheck = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\greencheck.gif').subsample(10, 10)
-        redcheck = PhotoImage(file=r'C:\Users\ghost\PycharmProjects\ApiScheduler\redcheck.gif').subsample(10, 10)
+        self.lightgrey = PhotoImage(file=r'C:\Users\rrodrigues\git\ApiScheduler\lightgrey.gif').subsample(10, 10) # Image icon to be used as place holder
+        greencheck = PhotoImage(file=r'C:\Users\rrodrigues\git\ApiScheduler\greencheck.gif').subsample(10, 10)
+        redcheck = PhotoImage(file=r'C:\Users\rrodrigues\git\ApiScheduler\redcheck.gif').subsample(10, 10)
 
         # Creates a Label to host green/check images as well as the initial place holder img
         self.checkicon = ttk.Label(self.frame_header)
         self.checkicon.config(image = self.lightgrey)
         self.checkicon.pack(side=RIGHT)
-
-
+        
+        # Separator widget
+        ttk.Separator(master, orient = HORIZONTAL).pack(fill=BOTH, expand=True)
+        
+        # Body Frame
+        notebook = ttk.Notebook(master)
+        notebook.pack(side=LEFT)
+        
+        bodyframeRelocate = ttk.Frame(notebook, width=600, height=400, relief=SUNKEN)
+        bodyframeRelocate.pack()
+        
+        bodyframeScript = ttk.Frame(notebook, width=400, height=400, relief=SUNKEN)
+        bodyframeScript.pack()
+         
+        notebook.add(bodyframeRelocate, text = 'Relocate')
+        notebook.add(bodyframeScript, text = 'Script')
+        
+        treeview =ttk.Treeview(bodyframeRelocate)
+        treeview.pack()
+        
+        treeview.insert('', '0', 'item1', text = 'First Item')
         def test(self):
             url = 'https://s001793.mobicontrolcloud.com/mobicontrol/api/token'
 
