@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-
+import os
 import urllib.request
 import urllib.parse
 import base64
@@ -43,9 +43,15 @@ class Feedback:
         testButton = ttk.Button(self.frame_header, text='Test', command=lambda: test(self)).pack(side=LEFT, padx=5, pady=5)
 
         # Creates the image icons to be shown when Test button is pressed
+<<<<<<< HEAD
         self.lightgrey = PhotoImage(file=r'C:\Users\ghost\git\ApiScheduler\lightgrey.gif').subsample(10, 10) # Image icon to be used as place holder
         greencheck = PhotoImage(file=r'C:\Users\ghost\git\ApiScheduler\greencheck.gif').subsample(10, 10)
         redcheck = PhotoImage(file=r'C:\Users\ghost\git\ApiScheduler\redcheck.gif').subsample(10, 10)
+=======
+        self.lightgrey = PhotoImage(file=(os.environ['USERPROFILE'] + '\git\ApiScheduler\\') + 'lightgrey.gif').subsample(10, 10) # Image icon to be used as place holder
+        greencheck = PhotoImage(file=(os.environ['USERPROFILE'] + '\git\ApiScheduler\\') + 'greencheck.gif').subsample(10, 10)
+        redcheck = PhotoImage(file=(os.environ['USERPROFILE'] + '\git\ApiScheduler\\') + 'redcheck.gif').subsample(10, 10)
+>>>>>>> c422ec9f63aa543574566c12fed60203056ae5e1
 
         # Creates a Label to host green/check images as well as the initial place holder img
         self.checkicon = ttk.Label(self.frame_header)
@@ -55,6 +61,7 @@ class Feedback:
         # Separator widget
         ttk.Separator(master, orient = HORIZONTAL).pack(fill=BOTH, expand=True)
         
+<<<<<<< HEAD
         import body
         body.bodyfunc(master)
             
@@ -71,13 +78,36 @@ class Feedback:
 #         notebook.add(bodyframeRelocate, text = 'Relocate')
 #         notebook.add(bodyframeScript, text = 'Script')
 #         
+=======
+        # Body structure
+        import body
+        body.bodyfunc(master)
+            
+# #         # Body Frame
+#         notebook = ttk.Notebook(master)
+#         notebook.pack(side=LEFT)
+#           
+#         bodyframeRelocate = ttk.Frame(notebook, width=600, height=400, relief=SUNKEN)
+#         bodyframeRelocate.pack()
+#           
+#         bodyframeScript = ttk.Frame(notebook, width=400, height=400, relief=SUNKEN)
+#         bodyframeScript.pack()
+#            
+#         notebook.add(bodyframeRelocate, text = 'Relocate')
+#         notebook.add(bodyframeScript, text = 'Script')
+#          
+>>>>>>> c422ec9f63aa543574566c12fed60203056ae5e1
 #         # Label Frame
 #         labelframeFrom = LabelFrame(bodyframeRelocate, text="From:")
 #         labelframeFrom.pack(expand=True)
 #         # TreeView          
 #         treeview = ttk.Treeview(labelframeFrom)
 #         treeview.pack()
+<<<<<<< HEAD
 #          
+=======
+#           
+>>>>>>> c422ec9f63aa543574566c12fed60203056ae5e1
 #         treeview.insert('', '0', 'item1', text = 'First Item')
 #         treeview.insert('item1', 'end', 'item11', text = ' Item 1.1')
 #         treeview.insert('', '1', 'item2', text = 'Second Item')
